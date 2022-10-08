@@ -5,11 +5,10 @@ import com.hevery.wiki.domain.EbookExample;
 import com.hevery.wiki.mapper.EbookMapper;
 import com.hevery.wiki.req.EbookReq;
 import com.hevery.wiki.resp.EbookResp;
-import org.springframework.beans.BeanUtils;
+import com.hevery.wiki.util.CopyUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,13 +27,6 @@ public class EbookService {
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         criteria.andNameLike("%" + req.getName() + "%");
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
-
-        List<EbookResp> respList = new ArrayList<>();
-        for (Ebook ebook :  ebookList) {
-            EbookResp ebookResp = new EbookResp();
-            BeanUtils.copyProperties(ebook, ebookResp);
-            respList.add(ebookResp);
-        }
-        return respList;
+        return CopyUtil.copyList(ebookList, EbookResp.class);
     }
 }
