@@ -1,47 +1,42 @@
 <template>
   <!--整个页面的框架-->
   <a-layout>
-    <!--不变的部分写在app.vue:包括header和footer-->
-    <a-layout-header class="header">
-      <div class="logo" />
-      <a-menu
-          v-model:selectedKeys="selectedKeys1"
-          theme="dark"
-          mode="horizontal"
-          :style="{ lineHeight: '64px' }"
-      >
-        <a-menu-item key="1">nav 1</a-menu-item>
-        <a-menu-item key="2">nav 2</a-menu-item>
-        <a-menu-item key="3">nav 3</a-menu-item>
-      </a-menu>
-    </a-layout-header>
+    <!-- 不变的部分写在app.vue:包括header和footer -->
+    <!-- 引入自定义组件the-header -->
+    <the-header></the-header>
     <!--变化的部分写在router-view-->
     <router-view/>
-    <a-layout-footer style="text-align: center">
-      Ant Design ©2018 Created by Ant UED
-    </a-layout-footer>
+    <the-footer></the-footer>
   </a-layout>
 </template>
 
 <script lang="ts">
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  components: {
-    UserOutlined,
-    LaptopOutlined,
-    NotificationOutlined,
-  },
-  setup() {
-    return {
-      selectedKeys1: ref<string[]>(['2']),
-      selectedKeys2: ref<string[]>(['1']),
-      collapsed: ref<boolean>(false),
-      openKeys: ref<string[]>(['sub1']),
-    };
-  },
-});
+  import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
+  import { defineComponent, ref } from 'vue';
+  import TheHeader from '@/components/the-header.vue';
+  import TheFooter from '@/components/the-footer.vue';
+
+  export default defineComponent({
+    name:"app",
+    components: {
+      UserOutlined,
+      LaptopOutlined,
+      NotificationOutlined,
+      TheHeader,
+      TheFooter
+    },
+    setup() {
+      return {
+        selectedKeys1: ref<string[]>(['2']),
+        selectedKeys2: ref<string[]>(['1']),
+        collapsed: ref<boolean>(false),
+        openKeys: ref<string[]>(['sub1']),
+      };
+    },
+  });
+
 </script>
+
 <style>
 #components-layout-demo-top-side-2 .logo {
   float: left;
